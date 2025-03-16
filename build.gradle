@@ -29,8 +29,8 @@ dependencies {
 	implementation 'org.tensorflow:ndarray:0.3.1'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'io.micrometer:micrometer-registry-prometheus'
-	implementation 'commons-fileupload:commons-fileupload:1.4'
-	implementation 'commons-io:commons-io:2.11.0'
+	implementation 'commons-fileupload:commons-fileupload:2.0.0-M1'
+	implementation 'commons-io:commons-io:2.15.0'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
 	runtimeOnly 'com.h2database:h2'
