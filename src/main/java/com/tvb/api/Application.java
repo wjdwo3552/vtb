@@ -1,13 +1,13 @@
-package com.deepfake.df;
+package com.tvb.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DfApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DfApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
