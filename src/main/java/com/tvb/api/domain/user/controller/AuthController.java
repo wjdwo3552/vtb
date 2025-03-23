@@ -22,7 +22,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/")
-    public ResponseEntity<TokenResponse> makeToken(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
         if (authService.makeTokenAndLogin(loginRequest) == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
