@@ -30,7 +30,6 @@ public class RegisterServiceImpl implements RegisterSerivce {
 
     private User toUserEntity(RegisterRequest registerRequest) {
         return User.builder()
-                .uid(registerRequest.getUid())
                 .phone(registerRequest.getPhone())
                 .email(registerRequest.getEmail())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
@@ -43,6 +42,6 @@ public class RegisterServiceImpl implements RegisterSerivce {
                 .build();
     }
     private RegisterResponse toRegisterResponse(User user) {
-        return new RegisterResponse(user.getUid());
+        return new RegisterResponse(user.getEmail());
     }
 }

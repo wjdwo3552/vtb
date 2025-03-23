@@ -20,9 +20,6 @@ public class User {
     @Column(name = "ucode")
     private Long ucode;  // 회원 고유 코드 (PK, AUTO_INCREMENT)
 
-    @Column(name = "uid", unique = true, nullable = false, length = 50)
-    private String uid;  // 로그인 ID (사용자 이름)
-
     @Column(name = "email", unique = true, nullable = false, length = 100)
     private String email;  // 이메일
 

@@ -6,5 +6,5 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class RegisterResponse {
-    private String uid;
+    private String email;
 }

@@ -11,10 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-    @NotBlank(message = "UID는 필수입니다.")
-    @Size(max = 50, message = "UID는 최대 50자여야 합니다.")
-    private String uid;
-
     @NotBlank(message = "이메일은 필수입니다.")
     @Email(message = "이메일 형식이 맞지 않습니다.")
     @Size(max = 100, message = "이메일은 최대 100자여야 합니다.")
