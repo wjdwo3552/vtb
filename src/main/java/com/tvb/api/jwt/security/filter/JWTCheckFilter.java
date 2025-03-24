@@ -28,7 +28,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
         System.out.println("check path: " + path);
-        if (path.startsWith("/api/v1/auth") || path.startsWith("/api/v1/register/")) {
+        if (path.startsWith("/api/v1/auth") || path.startsWith("/api/v1/register")) {
             return true;
         }
         return false;
