@@ -46,11 +46,17 @@ jobs:
 
       - name: Create Procfile
         run: |
-          echo "web: java -Dserver.port=8080 -jar app.jar" > Procfile
+          echo "web: java -jar app.jar --server.port=8080" > Procfile
 
       - name: Generate deployment package
         run: |
-          cp $(ls ./build/libs/*.jar | head -n 1) app.jar
+          # JAR 파일 이름 출력하여 확인
+          ls -l ./build/libs/
+          # JAR 파일 복사
+          cp $(ls ./build/libs/*SNAPSHOT.jar | head -n 1) app.jar
+          # 파일 존재 확인
+          ls -l app.jar
+          # 배포 패키지 생성
           zip -r deploy.zip . -x '*.git*' 'build/*' 'gradle/*' '.gradle/*'
 
       - name: Beanstalk Deploy
@@ -63,3 +69,32 @@ jobs:
           version_label: "Sample"
           region: us-east-2
           deployment_package: deploy.zip
+
+      - name: Configure nginx
+        run: |
+          mkdir -p .ebextensions/nginx
+          echo "files:
+            /etc/nginx/conf.d/proxy.conf:
+              mode: \"000644\"
+              owner: root
+              group: root
+              content: |
+                upstream nodejs {
+                  server 127.0.0.1:8080;
+                  keepalive 256;
+                }
+                
+                server {
+                  listen 80;
+                  
+                  location / {
+                    proxy_pass http://nodejs;
+                    proxy_set_header Connection '';
+                    proxy_http_version 1.1;
+                    proxy_set_header Host \$host;
+                    proxy_set_header X-Real-IP \$remote_addr;
+                    proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
+                    proxy_set_header X-Forwarded-Proto \$scheme;
+                    proxy_buffering off;
+                  }
+                }" > .ebextensions/nginx/nginx.conf
