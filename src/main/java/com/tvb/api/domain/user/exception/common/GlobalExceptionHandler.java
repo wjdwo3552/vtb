@@ -23,10 +23,10 @@ public class GlobalExceptionHandler {
                 .body(new ErrorMessageMap(ErrorCode.REGISTRATION_FAILURE.getCode(), ErrorCode.REGISTRATION_FAILURE.getMessage()));    }
 
 
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, String>> handleException(Exception e) {
-        Map<String, String> error = new HashMap<>();
-        error.put("error", "서버 오류가 발생했습니다.");
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+//    @ExceptionHandler(Exception.class)
+//    public ResponseEntity<Map<String, String>> handleException(Exception e) {
+//        Map<String, String> error = new HashMap<>();
+//        error.put("error", "서버 오류가 발생했습니다.");
+//        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+//    }
 }
