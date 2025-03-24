@@ -1,7 +1,6 @@
 package com.tvb.api.domain.member.service.impl;
 
 import com.tvb.api.domain.member.dto.LoginRequest;
-import com.tvb.api.domain.member.dto.TokenResponse;
 import com.tvb.api.domain.member.entity.User;
 import com.tvb.api.domain.member.exception.IllegalLoginTypeArgumentException;
 import com.tvb.api.domain.member.exception.InvalidCredentialsException;
@@ -15,7 +14,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Optional;
-import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordRepository passwordRepository;
 
     @Override
-    public TokenResponse makeTokenAndLogin(LoginRequest loginRequest) {
+    public Map<String, String> makeTokenAndLogin(LoginRequest loginRequest) {
         Optional<User> user = userRepository.findByUserId(loginRequest.getUser().getUserId());
 
         Optional<String> password = passwordRepository.findPasswordByUser(
@@ -40,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
             Map<String, String> dataMap = loginRequest.getDataMap();
             String accessToken = jwtUtil.createToken(dataMap, 10);
             String refreshToken = jwtUtil.createToken(dataMap, 10);
-            return new TokenResponse(accessToken,refreshToken,dataMap.get("userId") );
+            return Map.of("accessToken", accessToken, "refreshToken",refreshToken);
         }
         throw new InvalidCredentialsException();
     }
