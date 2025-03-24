@@ -8,6 +8,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 @RestControllerAdvice
 public class GlobalMemberExceptionHandler {
     @ExceptionHandler(AuthException.class)
@@ -19,8 +21,8 @@ public class GlobalMemberExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessageMap> handleMethodArgumentNotValidException() {
         return ResponseEntity.status(ErrorCode.REGISTRATION_FAILURE.getHttpStatus())
-                .body(new ErrorMessageMap(ErrorCode.REGISTRATION_FAILURE.getCode(), ErrorCode.REGISTRATION_FAILURE.getMessage()));    }
-
+                .body(new ErrorMessageMap(ErrorCode.REGISTRATION_FAILURE.getCode(), ErrorCode.REGISTRATION_FAILURE.getMessage()));
+    }
 
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<Map<String, String>> handleException(Exception e) {

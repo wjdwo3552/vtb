@@ -12,10 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterUserRequestData {
-    @Email
-    @NotBlank
-    @Size(max = 255)
     private String userId;
-
     LoginType loginType;
 }

@@ -8,16 +8,19 @@ import com.tvb.api.domain.member.dto.register.module.RegisterUserRequestData;
 import com.tvb.api.domain.member.entity.Password;
 import com.tvb.api.domain.member.entity.Profile;
 import com.tvb.api.domain.member.entity.User;
+import com.tvb.api.domain.member.exception.DataIntegrityViolationException;
 import com.tvb.api.domain.member.repository.ProfileRepository;
 import com.tvb.api.domain.member.repository.UserRepository;
 import com.tvb.api.domain.member.repository.PasswordRepository;
 import com.tvb.api.domain.member.service.RegisterSerivce;
+import jakarta.persistence.LockModeType;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class RegisterServiceImpl implements RegisterSerivce {
@@ -34,6 +37,13 @@ public class RegisterServiceImpl implements RegisterSerivce {
         RegisterUserRequestData userD_ = registerRequestData.getUser();
         RegisterProfileRequestData profileD_ = registerRequestData.getProfile();
         RegisterPasswordRequestData passwordD_ = registerRequestData.getPassword();
+
+        userRepository.findByUserId(userD_.getUserId()).ifPresent(user -> {
+            throw new DataIntegrityViolationException();
+        });
+        profileRepository.findByNickname(profileD_.getNickname()).ifPresent(profile -> {
+            throw new DataIntegrityViolationException();
+        });
 
         User user = User.builder()
                 .userId(userD_.getUserId())
@@ -58,14 +68,6 @@ public class RegisterServiceImpl implements RegisterSerivce {
 
         return toRegisterResponse(user);
     }
-    //This method is deprecated.
-    private User toUserEntity(RegisterUserRequestData d) {
-        return User.builder()
-                .userId(d.getUserId())
-                .loginType(d.getLoginType())
-                .build();
-    }
-
     private RegisterResponse toRegisterResponse(User user) {
         return new RegisterResponse(user.getUserId());
     }
