@@ -10,6 +10,7 @@
 gradle-wrappper.*
 gradlew
 gradlew.bat
-.gradle
-build
+.gradle/*
+build/
 gradle/
+.vscode/
