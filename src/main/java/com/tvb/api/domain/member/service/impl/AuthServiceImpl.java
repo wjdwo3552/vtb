@@ -9,11 +9,13 @@ import com.tvb.api.domain.member.repository.UserRepository;
 import com.tvb.api.domain.member.repository.PasswordRepository;
 import com.tvb.api.domain.member.service.AuthService;
 import com.tvb.api.jwt.security.util.JWTUtil;
+import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +43,15 @@ public class AuthServiceImpl implements AuthService {
             return new TokenResponse(accessToken,refreshToken,dataMap.get("userId") );
         }
         throw new InvalidCredentialsException();
+    }
+
+    @Override
+    public Cookie storeRefreshTokenInCookie(String refreshToken) {
+        Cookie cookie = new Cookie("refreshToken", refreshToken);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);//TODO: 현재는 https 통신을 지원하지 않아 비활성화 했지만 추후 https 통신 연결시 true 바꾸어야 한다.
+        cookie.setPath("/");
+        cookie.setMaxAge(7 * 24 * 60 * 60);
+        return cookie;
     }
 }
