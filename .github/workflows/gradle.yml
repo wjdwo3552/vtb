@@ -18,7 +18,7 @@ jobs:
       - name: Start MySQL
         uses: samin/mysql-action@v1.3
         with:
-          host port: 3800
+          host port: 3306
           mysql version: '8.0.41'
           mysql database: 'member'
           mysql root password: 'rootroot'
@@ -46,7 +46,7 @@ jobs:
 
       - name: Create Procfile
         run: |
-          echo "web: java -jar $(ls ./build/libs/*.jar | head -n 1)" > Procfile
+          echo "web: java -Dserver.port=8080 -jar app.jar" > Procfile
 
       - name: Generate deployment package
         run: |
@@ -60,6 +60,6 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: tvb
           environment_name: Tvb-env
-          version_label: ${{ steps.current-time.outputs.formattedTime }}
+          version_label: "Sample"
           region: us-east-2
           deployment_package: deploy.zip
