@@ -1,7 +1,8 @@
 package com.tvb.api.jwt.controller;
 
+import com.tvb.api.domain.member.dto.LoginRequest;
+import com.tvb.api.domain.member.dto.TokenResponse;
 import com.tvb.api.jwt.security.util.JWTUtil;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,11 +16,12 @@ public class TokenController {
     private final JWTUtil jwtUtil;
 
     @PostMapping("/make")
-    public ResponseEntity<Map<String, String>> makeToken() {
-        String accessToken = jwtUtil.createToken(Map.of("1", "2"), 10);
-        String refreshToken = jwtUtil.createToken(Map.of("3", "4"), 10);
-
-        return ResponseEntity.ok(Map.of("accessToken", accessToken, "refreshToken", refreshToken));
+    public ResponseEntity<TokenResponse> makeToken(@RequestBody LoginRequest loginRequest) {
+        Map<String, String> dataMap = loginRequest.getDataMap();
+        String accessToken = jwtUtil.createToken(dataMap, 10);
+        String refreshToken = jwtUtil.createToken(dataMap, 10);
+        TokenResponse tokenResponse = new TokenResponse(accessToken,refreshToken,dataMap.get("email") );
+        return ResponseEntity.ok(tokenResponse);
     }
 
     @PostMapping("/refresh")
