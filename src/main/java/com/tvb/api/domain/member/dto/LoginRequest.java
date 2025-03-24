@@ -1,8 +1,8 @@
 package com.tvb.api.domain.member.dto;
 
 
-import com.tvb.api.domain.member.entity.auth.Password;
-import com.tvb.api.domain.member.entity.member.User;
+import com.tvb.api.domain.member.entity.Password;
+import com.tvb.api.domain.member.entity.User;
 import lombok.*;
 
 import java.util.HashMap;

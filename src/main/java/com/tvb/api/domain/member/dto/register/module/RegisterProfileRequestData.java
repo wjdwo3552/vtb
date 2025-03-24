@@ -1,6 +1,6 @@
 package com.tvb.api.domain.member.dto.register.module;
 
-import com.tvb.api.domain.member.entity.member.User;
+import com.tvb.api.domain.member.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

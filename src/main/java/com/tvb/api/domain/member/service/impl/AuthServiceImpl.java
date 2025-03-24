@@ -2,11 +2,11 @@ package com.tvb.api.domain.member.service.impl;
 
 import com.tvb.api.domain.member.dto.LoginRequest;
 import com.tvb.api.domain.member.dto.TokenResponse;
-import com.tvb.api.domain.member.entity.member.User;
+import com.tvb.api.domain.member.entity.User;
 import com.tvb.api.domain.member.exception.IllegalLoginTypeArgumentException;
 import com.tvb.api.domain.member.exception.InvalidCredentialsException;
 import com.tvb.api.domain.member.repository.UserRepository;
-import com.tvb.api.domain.member.repository.auth.PasswordRepository;
+import com.tvb.api.domain.member.repository.PasswordRepository;
 import com.tvb.api.domain.member.service.AuthService;
 import com.tvb.api.jwt.security.util.JWTUtil;
 import lombok.RequiredArgsConstructor;

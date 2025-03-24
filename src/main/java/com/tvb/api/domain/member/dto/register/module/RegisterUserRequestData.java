@@ -1,6 +1,6 @@
 package com.tvb.api.domain.member.dto.register.module;
 
-import com.tvb.api.domain.member.entity.member.logintype.LoginType;
+import com.tvb.api.domain.member.entity.logintype.LoginType;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

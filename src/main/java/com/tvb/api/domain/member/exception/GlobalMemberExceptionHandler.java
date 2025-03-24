@@ -1,12 +1,15 @@
-package com.tvb.api.domain.member.exception.common;
+package com.tvb.api.domain.member.exception;
 
+import com.tvb.api.domain.member.exception.common.AuthException;
+import com.tvb.api.domain.member.exception.common.ErrorCode;
+import com.tvb.api.domain.member.exception.common.ErrorMessageMap;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class GlobalMemberExceptionHandler {
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<ErrorMessageMap> handleAuthException(AuthException e) {
         return ResponseEntity.status(e.getErrorCode().getHttpStatus())

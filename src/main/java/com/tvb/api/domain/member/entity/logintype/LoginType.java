@@ -1,4 +1,4 @@
-package com.tvb.api.domain.member.entity.member.logintype;
+package com.tvb.api.domain.member.entity.logintype;
 
 import com.tvb.api.domain.member.exception.IllegalLoginTypeArgumentException;
 import lombok.AllArgsConstructor;

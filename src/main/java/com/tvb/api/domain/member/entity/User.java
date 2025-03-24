@@ -1,8 +1,7 @@
-package com.tvb.api.domain.member.entity.member;
+package com.tvb.api.domain.member.entity;
 
-import com.tvb.api.domain.member.entity.auth.Password;
-import com.tvb.api.domain.member.entity.member.logintype.LoginTypeConvertor;
-import com.tvb.api.domain.member.entity.member.logintype.LoginType;
+import com.tvb.api.domain.member.entity.logintype.LoginTypeConvertor;
+import com.tvb.api.domain.member.entity.logintype.LoginType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.tvb.api.domain.member.entity.member.logintype;
+package com.tvb.api.domain.member.entity.logintype;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;

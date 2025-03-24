@@ -1,4 +1,4 @@
-package com.tvb.api.domain.member.entity.member;
+package com.tvb.api.domain.member.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

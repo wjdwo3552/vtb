@@ -1,6 +1,5 @@
-package com.tvb.api.domain.member.entity.auth;
+package com.tvb.api.domain.member.entity;
 
-import com.tvb.api.domain.member.entity.member.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
