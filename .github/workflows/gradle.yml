@@ -50,8 +50,8 @@ jobs:
 
       - name: Generate deployment package
         run: |
-          cp $(ls ./build/libs/*SNAPSHOT.jar | head -n 1) app.jar
-          ls -l app.jar  # 파일 존재 확인
+          cp ./build/libs/tvb-0.0.1-SNAPSHOT.jar app.jar
+          echo "web: java -jar app.jar --server.port=8080" > Procfile
           zip -r deploy.zip . -x '*.git*' 'build/*' 'gradle/*' '.gradle/*'
 
       - name: Beanstalk Deploy
@@ -61,10 +61,9 @@ jobs:
           aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           application_name: tvb
           environment_name: Tvb-env
-          version_label: ${{ steps.current-time.outputs.formattedTime }}
+          version_label: ${{ github.sha }}
           region: us-east-2
           deployment_package: deploy.zip
-          use_existing_version_if_available: false
 
       - name: Configure nginx
         run: |
