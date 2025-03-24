@@ -1,6 +1,8 @@
 package com.tvb.api.domain.user.dto;
 
 
+import com.tvb.api.domain.user.entity.auth.Password;
+import com.tvb.api.domain.user.entity.member.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -12,17 +14,12 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequest {
-    private String email;
-    private String password;
-    private String provider;
-    private LocalDateTime createdAt;
+    private User user;
+    private Password password;
 
     public Map<String, String> getDataMap() {
         Map<String, String> data = new HashMap<>();
-        data.put("email", this.email);
-        data.put("password", this.password);
-        data.put("provider", this.provider);
-        //data.put("createdAt", String.valueOf(this.createdAt));
+        data.put("userId", this.user.getUserId());
         return data;
     }
 }
