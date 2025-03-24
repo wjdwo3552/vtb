@@ -8,8 +8,6 @@
 /dataSources.local.xml
 /.idea
 gradle-wrappper.*
-gradlew
-gradlew.bat
 .gradle/*
 build/
 
