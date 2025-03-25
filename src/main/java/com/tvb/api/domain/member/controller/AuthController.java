@@ -2,8 +2,11 @@ package com.tvb.api.domain.member.controller;
 
 import com.tvb.api.domain.member.dto.LoginRequest;
 import com.tvb.api.domain.member.service.AuthService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 import java.util.Optional;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
@@ -23,6 +26,7 @@ public class AuthController {
 
     @PostMapping("/")
     public ResponseEntity<?> login(HttpServletResponse response, @RequestBody LoginRequest loginRequest) {
+        log.debug("Login request: {}", loginRequest);
         return Optional.ofNullable(authService.makeTokenAndLogin(loginRequest))
                 .map(tokenResponse -> Pair.of(
                         authService.storeRefreshTokenInCookie(tokenResponse.get("refreshToken")),
