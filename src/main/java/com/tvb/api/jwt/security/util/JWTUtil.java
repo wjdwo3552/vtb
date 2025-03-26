@@ -41,7 +41,12 @@ public class JWTUtil {
     }
 
     public Map<String, Object> validateToken(String token) {
-        SecretKey key = getSecretKey();
+        SecretKey key = null;
+        try {
+            key = getSecretKey();
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
 
         return Jwts.parser().verifyWith(key)
                 .build()

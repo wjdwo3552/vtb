@@ -7,6 +7,8 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -18,17 +20,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JWTCheckFilter extends OncePerRequestFilter {
+    @Autowired
     private JWTUtil jwtUtil;
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        System.out.println("check path: " + path);
-        if (path.startsWith("/api/v1/auth") || path.startsWith("/api/v1/register")) {
+        if (path.startsWith("/api/v1/auth") || path.startsWith("/api/v1/register") || path.startsWith("/api/v1/auth/refresh")) {
             return true;
         }
         return false;
@@ -44,14 +46,16 @@ public class JWTCheckFilter extends OncePerRequestFilter {
         String accessToken = headerStr.substring(7);
         try {
             java.util.Map<String, Object> tokenMap = jwtUtil.validateToken(accessToken);
+            java.util.Map<String, Object> rTokenMap = jwtUtil.validateToken(accessToken);
+            log.info("JWT validation successful. Token data: {}", tokenMap);
+            String userNo = rTokenMap.get("userNo").toString();
 
-            //TODO : uid의 정보를 가져올 수 있는 코드 추가 필요
-            String uid = "test";
             //TODO : roles라는 역할이 추가될 때 마찬가지로 roles를 받아오는 코드 추가 필요
-            String[] roles = {"user", "admin"};
+            //TODO : 지금의 역할은 User 외 존재 X. 따라서 User로 역할을 고정한다.
+            String[] roles = {"User"};
 
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-                    new UserPrincipal(uid), null, Arrays.stream(roles)
+                    new UserPrincipal(userNo), null, Arrays.stream(roles)
                         .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                             .collect(Collectors.toList())
             );
