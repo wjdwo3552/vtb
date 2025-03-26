@@ -8,6 +8,7 @@ import java.util.Map;
 public interface AuthService {
     Map<String, String> makeTokenAndLogin(AuthRequest authRequest);
     Map<String, String> RefreshToken(String accessToken, String refreshToken);
+    Map<String, Object> validateUserToken(String accessToken);
 
     Cookie storeRefreshTokenInCookie(String cValue);
 }

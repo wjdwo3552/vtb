@@ -9,6 +9,7 @@ import com.tvb.api.domain.member.repository.UserRepository;
 import com.tvb.api.domain.member.repository.PasswordRepository;
 import com.tvb.api.domain.member.service.AuthService;
 import com.tvb.api.jwt.security.util.JWTUtil;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -79,6 +80,10 @@ public class AuthServiceImpl implements AuthService {
         return cookie;
     }
 
+    public Map<String, Object> validateUserToken(String accessToken) {
+        return jwtUtil.validateToken(accessToken);
+    }
+
     private  Map<String, String> makeNewToken(String refreshToken) {
             Map<String, Object> claims = jwtUtil.validateToken(refreshToken);
             Map<String, String> dataMap = Map.of("userId", String.valueOf(claims.get("userId")), "userNo", String.valueOf(claims.get("userNo")));
@@ -90,5 +95,6 @@ public class AuthServiceImpl implements AuthService {
 
             return Map.of("accessToken", newAccessToken, "refreshToken", newRefreshToken);
     }
+
 
 }

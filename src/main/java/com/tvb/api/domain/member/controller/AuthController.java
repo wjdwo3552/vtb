@@ -2,6 +2,7 @@ package com.tvb.api.domain.member.controller;
 
 import com.tvb.api.domain.member.dto.AuthRequest;
 import com.tvb.api.domain.member.entity.User;
+import com.tvb.api.domain.member.exception.TokenNotFoundException;
 import com.tvb.api.domain.member.service.AuthService;
 import com.tvb.api.jwt.security.util.JWTUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -48,5 +49,21 @@ public class AuthController {
         log.info("Access token: {}", map.get("accessToken"));
         response.addCookie(authService.storeRefreshTokenInCookie(map.get("refreshToken")));
         return ResponseEntity.ok(Map.of("accessToken", map.get("accessToken")));
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> me(@RequestHeader(value = "Authorization", required = false) String accessToken,
+                                @CookieValue(name = "refreshToken") String refreshToken) {
+        log.info("Access token: {}", accessToken);
+        log.info("Refresh token: {}", refreshToken);
+
+
+        if (accessToken == null || accessToken.isBlank()) {
+            //** TODO: 액세스 토큰이 없으면 리프레시토큰을 검사하고 있으면 액세스 토큰을 발급해서 사용자 정보를 가져오고
+            //** TODO: 리프레시 토큰이 없으면 사용자가 인증되지 않았으므로 사용자가 존재하지 않는다고 판단함
+            throw new TokenNotFoundException();
+        }
+        //TODO: 액세스 토큰이 있으면 토큰의 유효성을 검사함
+        return ResponseEntity.ok(authService.validateUserToken(accessToken.substring(7)));
     }
 }
