@@ -9,6 +9,7 @@ import com.tvb.api.domain.member.repository.UserRepository;
 import com.tvb.api.domain.member.repository.PasswordRepository;
 import com.tvb.api.domain.member.service.AuthService;
 import com.tvb.api.jwt.security.util.JWTUtil;
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,10 +74,15 @@ public class AuthServiceImpl implements AuthService {
     public Cookie storeRefreshTokenInCookie(String refreshToken) {
         Cookie cookie = new Cookie("refreshToken", refreshToken);
         cookie.setHttpOnly(true);
-        cookie.setSecure(false);//TODO: 현재는 https 통신을 지원하지 않아 비활성화 했지만 추후 https 통신 연결시 true 바꾸어야 한다.
+        cookie.setSecure(true);//TODO: 현재는 https 통신을 지원하지 않아 비활성화 했지만 추후 https 통신 연결시 true 바꾸어야 한다.
         cookie.setPath("/");
         cookie.setMaxAge(7 * 24 * 60 * 60);
+        cookie.setAttribute("SameSite", "None");
         return cookie;
+    }
+
+    public Map<String, Object> validateUserToken(String accessToken) {
+        return jwtUtil.validateToken(accessToken);
     }
 
     private  Map<String, String> makeNewToken(String refreshToken) {
@@ -90,5 +96,6 @@ public class AuthServiceImpl implements AuthService {
 
             return Map.of("accessToken", newAccessToken, "refreshToken", newRefreshToken);
     }
+
 
 }
