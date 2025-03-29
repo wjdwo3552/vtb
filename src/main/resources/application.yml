@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+    open-in-view: false
+
+jwt:
+  secret:
+    key: 97653923549876458625843705036532453477
+
+org:
+  zerock:
+    upload:
+      path: upload

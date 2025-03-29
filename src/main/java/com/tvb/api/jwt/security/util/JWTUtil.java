@@ -1,14 +1,18 @@
 package com.tvb.api.jwt.security.util;
 
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import javax.crypto.SecretKey;
 import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.Map;
+import java.util.function.Predicate;
+
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class JWTUtil {
     private final String key;
@@ -53,4 +57,15 @@ public class JWTUtil {
                 .parseSignedClaims(token)
                 .getPayload();
     }
+    public Predicate<String> isValidToken = (token) -> {
+        try {
+            SecretKey key = getSecretKey();
+            Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
+            log.info("JWT validated successfully");
+            return true;
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            return false;
+        }
+    };
 }
