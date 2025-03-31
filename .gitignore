@@ -10,5 +10,5 @@
 gradle-wrappper.*
 .gradle/*
 build/
-
+/.env
 .vscode/
