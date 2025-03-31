@@ -1,4 +1,4 @@
-package com.tvb.api.jwt.security.util;
+package com.tvb.api.security.jwt.util;
 
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;

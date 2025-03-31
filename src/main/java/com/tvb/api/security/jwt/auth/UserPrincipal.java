@@ -1,4 +1,4 @@
-package com.tvb.api.jwt.security.auth;
+package com.tvb.api.security.jwt.auth;
 
 import lombok.RequiredArgsConstructor;
 

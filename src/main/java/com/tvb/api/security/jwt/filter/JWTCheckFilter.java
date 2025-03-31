@@ -1,7 +1,7 @@
-package com.tvb.api.jwt.security.filter;
+package com.tvb.api.security.jwt.filter;
 
-import com.tvb.api.jwt.security.auth.UserPrincipal;
-import com.tvb.api.jwt.security.util.JWTUtil;
+import com.tvb.api.security.jwt.auth.UserPrincipal;
+import com.tvb.api.security.jwt.util.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -30,7 +29,7 @@ public class JWTCheckFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
         String path = request.getRequestURI();
-        if (path.startsWith("/api/v1/auth") || path.startsWith("/api/v1/register") || path.startsWith("/api/v1/auth/refresh") || path.startsWith("/health")) {
+        if (path.startsWith("/api/v1/auth") || path.startsWith("/api/v1/register") || path.startsWith("/api/v1/auth/refresh") || path.startsWith("/health") || path.startsWith("/api/v1/auth/**")) {
             return true;
         }
         return false;
