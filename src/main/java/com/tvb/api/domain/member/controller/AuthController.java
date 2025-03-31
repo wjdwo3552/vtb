@@ -1,10 +1,7 @@
 package com.tvb.api.domain.member.controller;
 
 import com.tvb.api.domain.member.dto.AuthRequest;
-import com.tvb.api.domain.member.entity.User;
-import com.tvb.api.domain.member.exception.TokenNotFoundException;
 import com.tvb.api.domain.member.service.AuthService;
-import com.tvb.api.jwt.security.util.JWTUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.util.Pair;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -25,7 +20,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthController {
     private final AuthService authService;
-    private final JWTUtil jwtUtil;
 
     @PostMapping("/login")
     public ResponseEntity<?> login(HttpServletResponse response, @RequestBody AuthRequest authRequest) {

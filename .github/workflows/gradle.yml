@@ -52,7 +52,10 @@ jobs:
           cp ./build/libs/tvb-0.0.1-SNAPSHOT.jar app.jar
           echo "web: java -jar app.jar --server.port=8080" > Procfile
           zip -r deploy.zip . -x '*.git*' 'build/*' 'gradle/*' '.gradle/*'
-
+      - name: Set Up environment variables
+        run: |
+          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> $GITHUB_ENV
       - name: Beanstalk Deploy
         uses: einaregilsson/beanstalk-deploy@v22
         with:

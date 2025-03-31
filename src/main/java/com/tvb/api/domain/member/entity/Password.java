@@ -20,7 +20,7 @@ public class Password {
     @Column(name = "password_no", nullable = false, unique = true, updatable = false)
     private Long passwordNo;
 
-    @Column(name = "password", nullable = false, unique = true)
+    @Column(name = "password")
     private String password;
 
     @OneToOne(fetch = FetchType.LAZY)

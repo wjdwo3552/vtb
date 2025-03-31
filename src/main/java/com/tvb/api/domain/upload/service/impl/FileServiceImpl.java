@@ -1,12 +1,10 @@
 package com.tvb.api.domain.upload.service.impl;
 
 import com.tvb.api.domain.upload.service.FileService;
-import com.tvb.api.jwt.security.util.JWTUtil;
+import com.tvb.api.security.jwt.util.JWTUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor

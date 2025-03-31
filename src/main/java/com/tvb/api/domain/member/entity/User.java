@@ -32,4 +32,7 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Password password;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private SocialLogin socialLogin;
 }
